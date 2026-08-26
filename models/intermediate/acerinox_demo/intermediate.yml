@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: int_coil_production
+    description: '{{ doc("int_coil_production") }}'
+
+  - name: int_quality_summary
+    description: '{{ doc("int_quality_summary") }}'
+
+  - name: int_plant_order_metrics
+    description: '{{ doc("int_plant_order_metrics") }}'
+
+  - name: int_grade_quality_metrics
+    description: '{{ doc("int_grade_quality_metrics") }}'
+
+  - name: int_fct_coil_quality
+    description: '{{ doc("int_fct_coil_quality") }}'
