@@ -23,8 +23,7 @@ def model(dbt, session):
     Output: one row per plant × calendar month with raw and smoothed yield.
     """
     dbt.config(
-        packages=["pandas", "numpy", "pyarrow", "scipy"],
-        materialized="table",
+        packages=["pandas", "numpy", "pyarrow", "scipy"]
     )
 
     # ── 1. Pull upstream data ──────────────────────────────────────────────

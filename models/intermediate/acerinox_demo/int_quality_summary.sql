@@ -8,12 +8,6 @@ with inspections as (
 
 ),
 
-coil_status as (
-
-    select * from {{ ref('stg_acx_coil_status') }}
-
-),
-
 aggregated as (
     select
         coil_id,
@@ -43,14 +37,10 @@ aggregated as (
 
 quality_summary as (
     select
-        aggregated.*,
-        coil_status.status,
-        coil_status.status_category,
-        coil_status.status_description
+        aggregated.*
     from aggregated
-    -- join via inspections.coil_id → coil_outputs.statusid (joined later
-    -- in the fact model; here we expose the status lookup for reference)
-    -- Note: status_id lives on coil_outputs, so final join happens in int_fct_coil_quality
+    -- status_id lives on coil_outputs, not on inspections.
+    -- The join to coil_status happens downstream in int_fct_coil_quality.
 )
 
 select * from quality_summary

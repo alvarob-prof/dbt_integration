@@ -1,4 +1,4 @@
-- int_coil_production.sql
+-- int_coil_production.sql
 -- Enriches each coil record with plant, grade, product line,
 -- and production order context.
 

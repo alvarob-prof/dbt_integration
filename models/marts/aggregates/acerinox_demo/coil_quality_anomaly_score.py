@@ -34,8 +34,7 @@ def model(dbt, session):
     and whether the coil was flagged relative to its grade peer group.
     """
     dbt.config(
-        packages=["pandas", "numpy", "pyarrow"],
-        materialized="table",
+        packages=["pandas", "numpy", "pyarrow"]
     )
 
     # ── 1. Pull upstream data ──────────────────────────────────────────────
