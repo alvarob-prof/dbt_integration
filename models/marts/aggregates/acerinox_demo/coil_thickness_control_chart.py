@@ -19,8 +19,7 @@ def model(dbt, session):
     flag indicating whether it breaches the ±3σ (UCL/LCL) boundary.
     """
     dbt.config(
-        packages=["pandas", "numpy", "pyarrow"],
-        materialized="table",
+        packages=["pandas", "numpy", "pyarrow"]
     )
 
     # ── 1. Pull upstream data ──────────────────────────────────────────────
