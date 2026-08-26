@@ -3,21 +3,6 @@ import numpy as np
 
 
 def model(dbt, session):
-    """
-    Statistical Process Control (SPC) — X-bar / σ control chart for coil
-    thickness deviation, computed per steel grade.
-
-    Why Python?
-    -----------
-    SPC requires computing rolling statistics (mean ± k·std) that are
-    significantly more natural in pandas than in SQL window functions.
-    The model also flags individual coil violations and outputs the control
-    limits alongside the raw measurements so a BI tool can overlay both
-    in one query.
-
-    Output: one row per coil, with its grade-level control limits and a
-    flag indicating whether it breaches the ±3σ (UCL/LCL) boundary.
-    """
     dbt.config(
         packages=["pandas", "numpy", "pyarrow"]
     )
