@@ -3,25 +3,6 @@ import numpy as np
 
 
 def model(dbt, session):
-    """
-    Rolling production yield trend per plant, aggregated by month.
-
-    Why Python?
-    -----------
-    Rolling windows that span a variable number of time-bucketed rows are
-    awkward in SQL — you need RANGE BETWEEN clauses tied to date arithmetic.
-    pandas .rolling() with a time-aware DatetimeIndex handles this in two
-    lines and makes the intent immediately obvious.
-
-    The model also computes:
-    - month-over-month yield delta
-    - a 3-month centred rolling average (requires look-ahead, unavailable
-      in SQL without a self-join)
-    - a simple linear trend slope over the full available window, so a
-      single number can answer "is this plant's yield improving?"
-
-    Output: one row per plant × calendar month with raw and smoothed yield.
-    """
     dbt.config(
         packages=["pandas", "numpy", "pyarrow", "scipy"]
     )
@@ -85,7 +66,7 @@ def model(dbt, session):
             from scipy import stats as scipy_stats
             x = np.arange(n)
             slope, intercept, r_value, p_value, _ = scipy_stats.linregress(
-                x, yield_col.fillna(method="ffill")
+                x, yield_col.ffill()
             )
             grp["TREND_SLOPE_PER_MONTH"] = round(slope, 4)
             grp["TREND_R2"] = round(r_value ** 2, 4)

@@ -30,14 +30,17 @@ models:
       acerinox_demo:
         +docs:
           node_color: "CadetBlue"
-
+    intermediate:
+      acerinox_demo:
+        +docs:
+          node_color: "MediumSlateBlue"
     marts:
-      +materialized: table
       aggregates:
         acerinox_demo:
           +docs:
             node_color: "Maroon"
           +tags: "bi"
+          +materialized: table
       core:
         +docs:
           node_color: "#800080"
@@ -48,8 +51,3 @@ models:
         train_predict:
           +docs:
             node_color: "#36454f"
-
-    intermediate:
-      acerinox_demo:
-        +docs:
-          node_color: "MediumSlateBlue"

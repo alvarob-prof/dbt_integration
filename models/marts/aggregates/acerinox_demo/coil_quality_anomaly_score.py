@@ -3,36 +3,6 @@ import numpy as np
 
 
 def model(dbt, session):
-    """
-    Multivariate anomaly scoring for coil mechanical properties.
-
-    Why Python?
-    -----------
-    Anomaly detection requires computing Z-scores across *multiple* columns
-    simultaneously and then combining them into a composite score — something
-    that would require 10+ SQL CTEs and still lack the Mahalanobis distance
-    approach used here.  Python makes this trivial and the intent is clear.
-
-    Method
-    ------
-    1. For each coil, standardise four mechanical-property columns
-       (tensile strength, yield strength, elongation, hardness) using
-       the per-grade mean and standard deviation as the reference
-       distribution — because 316L and 430 have completely different
-       expected ranges and must be compared against their own population.
-
-    2. Compute:
-       - Individual Z-scores per property
-       - A composite Euclidean anomaly score = √(Σ z²) across all properties
-       - An anomaly tier: NORMAL / ELEVATED / ANOMALY based on the score
-
-    3. Flag coils whose composite score exceeds the 95th percentile of
-       their own grade population — a data-driven threshold, not a
-       hardcoded constant.
-
-    Output: one row per coil with Z-scores, composite score, anomaly tier,
-    and whether the coil was flagged relative to its grade peer group.
-    """
     dbt.config(
         packages=["pandas", "numpy", "pyarrow"]
     )
