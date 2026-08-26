@@ -1,0 +1,61 @@
+version: 2
+
+models:
+
+  - name: coil_thickness_control_chart
+    description: >
+      Statistical Process Control (SPC) X-bar / σ control chart for coil
+      thickness deviation per steel grade.
+      Computes per-grade process mean, standard deviation, and the ±2σ / ±3σ
+      control limits. Each coil is classified as IN_CONTROL, WARNING, or
+      OUT_OF_CONTROL. Feeds quality control dashboards and operator alerts.
+    columns:
+      - name: COIL_ID
+        data_tests:
+          - not_null
+      - name: SPC_STATUS
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['IN_CONTROL', 'WARNING', 'OUT_OF_CONTROL', 'NO_DATA']
+                quote: true
+
+  - name: plant_yield_rolling_trend
+    description: >
+      Monthly production yield trend per plant, with a 3-month trailing rolling
+      average, a 3-month centred rolling average, month-over-month yield delta,
+      and a linear trend slope (with R² and p-value) computed over the full
+      available window per plant.
+      Answers: "Is this plant's yield systematically improving or declining?"
+    columns:
+      - name: PLANT_NAME
+        data_tests:
+          - not_null
+      - name: PRODUCTION_MONTH
+        data_tests:
+          - not_null
+      - name: TREND_DIRECTION
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['IMPROVING', 'DECLINING', 'STABLE', 'INSUFFICIENT_DATA']
+                quote: true
+
+  - name: coil_quality_anomaly_score
+    description: >
+      Multivariate anomaly scoring for coil mechanical properties (tensile
+      strength, yield strength, elongation, hardness). Z-scores are computed
+      against the per-grade reference population so that different alloy
+      families are compared on an equal footing. A composite Euclidean
+      anomaly score is derived and each coil is classified as NORMAL,
+      ELEVATED, or ANOMALY relative to its grade's 95th-percentile threshold.
+    columns:
+      - name: COIL_ID
+        data_tests:
+          - not_null
+      - name: ANOMALY_TIER
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['NORMAL', 'ELEVATED', 'ANOMALY', 'NO_DATA']
+                quote: true

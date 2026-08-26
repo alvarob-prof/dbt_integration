@@ -1,0 +1,100 @@
+version: 2
+
+sources:
+  - name: acerinox_demo
+    description: >
+      Acerinox stainless steel manufacturing datasets. Raw operational tables
+      loaded from the production systems into Snowflake for analytical processing.
+    database: acerinox_demo
+    schema: raw
+    tables:
+      - name: plants
+        description: >
+          One record per production plant. Contains geographic and capacity
+          information for each Acerinox manufacturing facility worldwide.
+        columns:
+          - name: plantid
+            data_tests:
+              - unique
+              - not_null
+          - name: plantref
+            data_tests:
+              - unique
+              - not_null
+
+      - name: steel_grades
+        description: >
+          One record per stainless steel grade. Contains alloy composition
+          ranges and typical application context for each grade produced.
+        columns:
+          - name: gradeid
+            data_tests:
+              - unique
+              - not_null
+          - name: graderef
+            data_tests:
+              - unique
+              - not_null
+
+      - name: product_lines
+        description: >
+          One record per product line (Flat, Long, Special, Recycled, Tubular).
+          Groups production by commercial segment and target market.
+        columns:
+          - name: productlineid
+            data_tests:
+              - unique
+              - not_null
+
+      - name: production_orders
+        description: >
+          One record per production order. Each order is assigned to a specific
+          plant, steel grade, and product line, and tracks planned vs actual
+          tonnage and schedule.
+        columns:
+          - name: orderid
+            data_tests:
+              - unique
+              - not_null
+
+      - name: coil_outputs
+        description: >
+          One record per coil produced. Coils are the primary output unit of
+          stainless steel flat production. Each coil records physical dimensions,
+          mechanical properties, and current status.
+        columns:
+          - name: coilid
+            data_tests:
+              - unique
+              - not_null
+          - name: coil_serial
+            data_tests:
+              - unique
+              - not_null
+          - name: surface_finish
+            data_tests:
+              - accepted_values:
+                  arguments:
+                    values: ['2B', 'BA', 'No.1', '2D', '2R', 'HR']
+                    quote: true
+
+      - name: quality_inspections
+        description: >
+          One record per quality inspection event. Inspections are performed at
+          the end of each coil production and record dimensional, weight and
+          surface conformance against tolerance limits.
+        columns:
+          - name: inspectionid
+            data_tests:
+              - unique
+              - not_null
+
+      - name: coil_status
+        description: >
+          Reference table for coil lifecycle statuses. Contextualises whether
+          a coil was released, requires rework, was downgraded, or was scrapped.
+        columns:
+          - name: statusid
+            data_tests:
+              - unique
+              - not_null
