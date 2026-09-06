@@ -16,7 +16,7 @@ renamed as (
         lat           as latitude,
         lng           as longitude,
         capacity_tons_per_year,
-        founded_year,
+        founded_year
         --planned_maintenance_window
         -- omit internal metadata columns if present
     from source

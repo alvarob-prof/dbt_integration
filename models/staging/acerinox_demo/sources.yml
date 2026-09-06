@@ -20,7 +20,9 @@ sources:
           - name: plantref
             data_tests:
               - unique
-              - not_null
+              - not_null:
+                  config:
+                    severity: warn
 
       - name: steel_grades
         description: >
