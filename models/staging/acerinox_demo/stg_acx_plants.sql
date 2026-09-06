@@ -16,7 +16,8 @@ renamed as (
         lat           as latitude,
         lng           as longitude,
         capacity_tons_per_year,
-        founded_year
+        founded_year,
+        energy_source
         -- omit internal metadata columns if present
     from source
 )
