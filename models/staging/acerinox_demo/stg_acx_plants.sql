@@ -7,7 +7,7 @@ select
     lat           as latitude,
     lng           as longitude,
     capacity_tons_per_year,
-    founded_year
+    founded_
     --planned_maintenance_window
     -- omit internal metadata columns if present
 from {{ source('acerinox_demo', 'plants') }}
